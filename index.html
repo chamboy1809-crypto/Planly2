@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planly – Studieplanlægger</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+
+    <div class="brand">
+      <span class="brand-icon">✓</span>
+      <h1>Planly</h1>
+    </div>
+
+    <nav>
+      <button class="nav-item active" data-page="calendar">▦ Kalender</button>
+      <button class="nav-item" data-page="tasks">● Kommende opgaver</button>
+      <button class="nav-item" data-page="settings">⚙ Indstillinger</button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <div class="theme-buttons">
+        <button id="lightMode">☼</button>
+        <button id="darkMode">☾</button>
+      </div>
+
+      <div class="profile">
+        <span class="avatar">CS</span>
+        <span>Chanmeet Singh</span>
+      </div>
+    </div>
+
+  </aside>
+
+
+  <main class="main-content">
+
+    <section id="calendarPage" class="page">
+
+      <div class="calendar-panel panel">
+
+        <header class="month-header">
+          <button id="prevMonth" class="icon-button">‹</button>
+          <h2 id="monthTitle"></h2>
+          <button id="nextMonth" class="icon-button">›</button>
+
+          <button id="addReminderTop" class="primary-button">
+            ＋ Tilføj reminder
+          </button>
+        </header>
+
+        <div class="calendar-grid weekdays">
+          <span>Man</span>
+          <span>Tir</span>
+          <span>Ons</span>
+          <span>Tor</span>
+          <span>Fre</span>
+          <span>Lør</span>
+          <span>Søn</span>
+        </div>
+
+        <div id="calendarGrid" class="calendar-grid days"></div>
+
+        <div class="deadlines">
+
+          <div class="deadline-heading">
+            <strong>Kommende deadlines</strong>
+            <button id="seeAll">Se alle →</button>
+          </div>
+
+          <div id="deadlinePreview"></div>
+
+        </div>
+
+      </div>
+
+
+      <div class="day-panel panel">
+
+        <header class="day-header">
+          <button id="todayButton" class="icon-button">‹</button>
+          <h2 id="selectedDateTitle"></h2>
+          <span class="calendar-symbol">▦</span>
+        </header>
+
+        <div class="day-columns">
+
+          <section class="schedule-section">
+            <h3>▦ Dit skema</h3>
+            <div id="scheduleList"></div>
+          </section>
+
+          <section class="reminders-section">
+
+            <h3>
+              ♧ Dine reminders
+              <span id="reminderCount" class="count">0</span>
+            </h3>
+
+            <div id="reminderList"></div>
+
+            <button id="addReminder" class="primary-button full-width">
+              ＋ Opret reminder
+            </button>
+
+          </section>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section id="tasksPage" class="page hidden">
+
+      <div class="wide-panel panel">
+
+        <header class="simple-header">
+          <div>
+            <p class="eyebrow">PLANLY</p>
+            <h2>Kommende opgaver</h2>
+          </div>
+
+          <button id="addTaskButton" class="primary-button">
+            ＋ Tilføj opgave
+          </button>
+        </header>
+
+        <div id="allTasks"></div>
+
+      </div>
+
+    </section>
+
+
+    <section id="settingsPage" class="page hidden">
+
+      <div class="wide-panel panel">
+
+        <p class="eyebrow">PLANLY</p>
+        <h2>Indstillinger</h2>
+
+        <p class="muted">
+          Her kan du ændre indstillingerne for Planly.
+        </p>
+
+        <div class="setting-row">
+
+          <div>
+            <strong>Profil</strong>
+            <p class="muted">Dit navn i Planly</p>
+          </div>
+
+          <input id="profileName" value="Chanmeet Singh">
+
+        </div>
+
+        <div class="setting-row">
+
+          <div>
+            <strong>Eksempeldata</strong>
+            <p class="muted">Gendan eksempeldata</p>
+          </div>
+
+          <button id="resetData" class="secondary-button">
+            Gendan data
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<dialog id="reminderDialog">
+
+  <form id="reminderForm">
+
+    <div class="dialog-heading">
+      <h2>Opret reminder</h2>
+
+      <button type="button" id="closeDialog" class="icon-button">
+        ×
+      </button>
+    </div>
+
+    <label for="reminderTitle">Titel</label>
+
+    <input
+      id="reminderTitle"
+      type="text"
+      placeholder="Fx Dansk aflevering"
+      required
+    >
+
+    <label for="reminderDate">Dato</label>
+
+    <input
+      id="reminderDate"
+      type="date"
+      required
+    >
+
+    <label for="reminderTime">Tidspunkt</label>
+
+    <input
+      id="reminderTime"
+      type="time"
+    >
+
+    <label for="reminderNote">Beskrivelse</label>
+
+    <textarea
+      id="reminderNote"
+      rows="3"
+      placeholder="Hvad skal du huske?"
+    ></textarea>
+
+    <label for="reminderType">Type</label>
+
+    <select id="reminderType">
+      <option value="personal">Personlig</option>
+      <option value="school">Skole</option>
+    </select>
+
+    <div class="dialog-actions">
+
+      <button
+        type="button"
+        id="cancelDialog"
+        class="secondary-button"
+      >
+        Annuller
+      </button>
+
+      <button type="submit" class="primary-button">
+        Gem reminder
+      </button>
+
+    </div>
+
+  </form>
+
+</dialog>
+
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
